@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import time
+import requests
 
 hostName = "localhost"
 serverPort = 8080
@@ -11,12 +11,14 @@ class MyServer(BaseHTTPRequestHandler):
         обработку входящих запросов от клиентов
     """
 
-    def do_get(self):
+    def do_GET(self):
         """ Метод для обработки входящих GET-запросов """
+        url = "https://raw.githubusercontent.com/Onny-ch/Verstka_Homework/refs/heads/develop/contacts.html"
 
-        with open("home.html", "r", encoding="utf-8") as f:
-            html_content = f.read()
-
+        # with open("contacts.html", "r", encoding="utf-8") as f:
+        #     html_content = f.read()
+        response = requests.get(url)
+        html_content = response.text
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
